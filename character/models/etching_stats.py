@@ -2,7 +2,7 @@ from django.db import models
 from .character import Character
 
 
-class Etching(models.Model):
+class EtchingStats(models.Model):
     LEVEL_CHOICES = [
         ("s0", "s0"),
         ("s1", "s1"),
@@ -14,7 +14,7 @@ class Etching(models.Model):
     ]
 
     character = models.ForeignKey(
-        Character, on_delete=models.CASCADE, related_name="stats"
+        Character, on_delete=models.CASCADE, related_name="etching_stats"
     )
 
     level = models.CharField(max_length=2, choices=LEVEL_CHOICES)

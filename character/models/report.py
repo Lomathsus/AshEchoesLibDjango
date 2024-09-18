@@ -2,7 +2,7 @@ from django.db import models
 from .character import Character
 
 
-class Reports(models.Model):
+class Report(models.Model):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
 
     birth_world = models.CharField(max_length=30)

@@ -5,9 +5,10 @@ from .character import Character
 class Battle(models.Model):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
 
-    base_critical = models.IntegerField()
+    critical = models.IntegerField()
     damage_reduction = models.IntegerField()
-    attack_tag = models.CharField(max_length=100)
+    attack_name = models.CharField(max_length=30)
+    attack_tag = models.JSONField()
     attack_range = models.CharField(max_length=30)
     attack_range_value = models.IntegerField()
     attack_speed = models.IntegerField()
@@ -17,3 +18,4 @@ class Battle(models.Model):
     mastery_on_heal = models.IntegerField()
     mastery_on_damage = models.IntegerField()
     mastery_on_block = models.IntegerField()
+    character_enhancement = models.TextField()

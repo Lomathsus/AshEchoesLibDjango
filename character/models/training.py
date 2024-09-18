@@ -2,7 +2,7 @@ from django.db import models
 from .character import Character
 
 
-class TrainingAttribute(models.Model):
+class Training(models.Model):
     # 定义所有可能的训练属性
     attribute_choices = [
         ("health", "体质"),
@@ -24,29 +24,29 @@ class TrainingAttribute(models.Model):
         return f"{self.get_attribute_display()}: {self.value}"
 
 
-class Training(models.Model):
+class CharacterTraining(models.Model):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
 
     # 阶段1的训练属性
     phase1_attribute1 = models.ForeignKey(
-        TrainingAttribute, related_name="phase1_attr1", on_delete=models.CASCADE
+        Training, related_name="phase1_attr1", on_delete=models.CASCADE
     )
     phase1_attribute2 = models.ForeignKey(
-        TrainingAttribute, related_name="phase1_attr2", on_delete=models.CASCADE
+        Training, related_name="phase1_attr2", on_delete=models.CASCADE
     )
     phase1_attribute3 = models.ForeignKey(
-        TrainingAttribute, related_name="phase1_attr3", on_delete=models.CASCADE
+        Training, related_name="phase1_attr3", on_delete=models.CASCADE
     )
 
     # 阶段2的训练属性
     phase2_attribute1 = models.ForeignKey(
-        TrainingAttribute, related_name="phase2_attr1", on_delete=models.CASCADE
+        Training, related_name="phase2_attr1", on_delete=models.CASCADE
     )
     phase2_attribute2 = models.ForeignKey(
-        TrainingAttribute, related_name="phase2_attr2", on_delete=models.CASCADE
+        Training, related_name="phase2_attr2", on_delete=models.CASCADE
     )
     phase2_attribute3 = models.ForeignKey(
-        TrainingAttribute, related_name="phase2_attr3", on_delete=models.CASCADE
+        Training, related_name="phase2_attr3", on_delete=models.CASCADE
     )
 
     def __str__(self):
