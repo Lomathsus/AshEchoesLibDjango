@@ -19,7 +19,7 @@ class CharacterSkill(models.Model):
     is_seed = models.BooleanField(default=False)
 
 
-class SkillLevel(models.Model):
+class CharacterSkillLevel(models.Model):
     skill = models.ForeignKey(
         CharacterSkill, on_delete=models.CASCADE, related_name="levels"
     )  # 关联技能

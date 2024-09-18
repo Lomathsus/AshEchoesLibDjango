@@ -18,11 +18,11 @@ class EtchingStats(models.Model):
     )
 
     level = models.CharField(max_length=2, choices=LEVEL_CHOICES)
-    health = models.PositiveIntegerField()
-    defence = models.PositiveIntegerField()
-    attack = models.PositiveIntegerField()
-    mastery = models.PositiveIntegerField()
-    terminal = models.PositiveIntegerField()
+    health = models.IntegerField()
+    defence = models.IntegerField()
+    attack = models.IntegerField()
+    mastery = models.IntegerField()
+    terminal = models.IntegerField()
 
     def __str__(self):
         return f"{self.character.name} etching - {self.level}"

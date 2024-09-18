@@ -1,1 +1,2 @@
-from .character_skill import CharacterSkill
+from .character_skill import CharacterSkill, CharacterSkillLevel
+from .passive_skill import PassiveSkill

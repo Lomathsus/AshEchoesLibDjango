@@ -4,7 +4,7 @@ from .character import Character
 
 class Training(models.Model):
     # 定义所有可能的训练属性
-    attribute_choices = [
+    stat_choices = [
         ("health", "体质"),
         ("defence", "防御"),
         ("attack", "攻击"),
@@ -16,7 +16,7 @@ class Training(models.Model):
         ("damage_reduction", "减伤"),
     ]
 
-    attribute = models.CharField(max_length=20, choices=attribute_choices)
+    stat = models.CharField(max_length=20, choices=stat_choices)
 
     value = models.IntegerField()  # 可根据具体需求选择合适的数据类型
 

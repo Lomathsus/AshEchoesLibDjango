@@ -18,9 +18,9 @@ class Stats(models.Model):
     )
 
     level = models.CharField(max_length=2, choices=LEVEL_CHOICES)
-    health = models.PositiveIntegerField()
-    attack = models.PositiveIntegerField()
-    mastery = models.PositiveIntegerField()
+    health = models.IntegerField()
+    attack = models.IntegerField()
+    mastery = models.IntegerField()
 
     def __str__(self):
         return f"{self.character.name} stats - {self.level}"

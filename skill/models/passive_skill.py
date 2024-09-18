@@ -1,5 +1,8 @@
 from django.db import models
 
+from character.models import Character
+from inner_mark.models import InnerMark
+
 
 class PassiveSkill(models.Model):
     name = models.CharField(max_length=30)
@@ -16,18 +19,10 @@ class PassiveSkill(models.Model):
     enemy_type = models.JSONField()
     activation_mode = models.JSONField()
     damage_increase = models.JSONField()
-    damage_reduction = models.PositiveIntegerField()
+    damage_reduction = models.IntegerField()
     target_debuff = models.CharField(max_length=50)
     stat_increase = models.JSONField()
     special_mechanism = models.JSONField()
 
     def __str__(self):
         return self.name
-
-
-class CharacterPassiveSkill(models.Model):
-    character = models.ForeignKey("Character", on_delete=models.CASCADE)
-    passive_skill = models.ForeignKey("PassiveSkill", on_delete=models.CASCADE)
-
-
-# class MarkPassiveSkill(models.Model):

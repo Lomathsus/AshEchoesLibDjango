@@ -7,7 +7,7 @@ class Collection(models.Model):
         Character, on_delete=models.CASCADE, related_name="collections"
     )
 
-    item_number = models.PositiveIntegerField()
+    item_number = models.IntegerField()
     description = models.TextField()
 
     def __str__(self):

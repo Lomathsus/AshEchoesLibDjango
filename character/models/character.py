@@ -1,5 +1,7 @@
 from django.db import models
 
+from skill.models import PassiveSkill
+
 
 # Create your models here.
 class Character(models.Model):
@@ -17,6 +19,17 @@ class Character(models.Model):
     acquisition = models.JSONField()
     music_name = models.CharField(max_length=50)
     expression = models.JSONField()
+    passive_skills = models.ManyToManyField(
+        PassiveSkill, through="CharacterPassiveSkill"
+    )
 
     def __str__(self):
         return self.name
+
+
+class CharacterPassiveSkill(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    passive_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.character.name}-{self.passive_skill.name}"
