@@ -1,11 +1,13 @@
 from django.db import models
 
 from character.models import Character
+from constant.model_choices import SKILL_TYPE
 from inner_mark.models import InnerMark
 
 
 class PassiveSkill(models.Model):
     name = models.CharField(max_length=30)
+    type = models.CharField(max_length=30, choices=SKILL_TYPE)
     rarity = models.IntegerField()
     profession = models.JSONField()
     profession_type = models.JSONField()

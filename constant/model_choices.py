@@ -7,3 +7,5 @@ STAT_CHOICES = [
     ("mastery", "专精"),
     ("terminal", "终端"),
 ]
+
+SKILL_TYPE = [("motivation", "激励"), ("core", "核心"), ("regular", "常规")]

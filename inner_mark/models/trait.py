@@ -4,7 +4,10 @@ from .inner_mark import InnerMark
 
 
 class Trait(models.Model):
-    inner_mark = models.ForeignKey(InnerMark, on_delete=models.CASCADE)
+    inner_mark = models.ForeignKey(
+        InnerMark, on_delete=models.CASCADE, related_name="traits"
+    )
+
     description = models.TextField()
     level_max_addition = models.TextField()
 
@@ -13,7 +16,7 @@ class Trait(models.Model):
 
 
 class TraitLevel(models.Model):
-    trait = models.ForeignKey(Trait, on_delete=models.CASCADE)
+    trait = models.ForeignKey(Trait, on_delete=models.CASCADE, related_name="levels")
 
     level = models.IntegerField()
     values = models.JSONField()
