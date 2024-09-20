@@ -1,8 +1,9 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class Stats(models.Model):
+class Stat(TimestampedModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="stats"
     )
@@ -12,9 +13,10 @@ class Stats(models.Model):
     mastery = models.IntegerField()
 
     class Meta:
+        db_table = "character_stat"
         constraints = [
             models.UniqueConstraint(
-                fields=["character", "level"], name="unique_character_stats_level"
+                fields=["character", "level"], name="unique_character_stat"
             )
         ]
 

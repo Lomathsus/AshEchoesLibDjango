@@ -1,8 +1,9 @@
 from django.db import models
 from .inner_mark import InnerMark
+from apps.common.abstract_models import TimestampedModel
 
 
-class EtchingStats(models.Model):
+class EtchingStat(TimestampedModel):
     inner_mark = models.ForeignKey(
         InnerMark, on_delete=models.CASCADE, related_name="etching_stats"
     )
@@ -14,10 +15,11 @@ class EtchingStats(models.Model):
     terminal = models.IntegerField()
 
     class Meta:
-        db_table = "etching_stats"
+        db_table = "inner_mark_etching_stat"
         constraints = [
             models.UniqueConstraint(
-                fields=["inner_mark", "level"], name="unique_etching_stats_level"
+                fields=["inner_mark", "level"],
+                name="unique_inner_mark_etching_stat",
             )
         ]
 

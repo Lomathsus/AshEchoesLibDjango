@@ -1,8 +1,9 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class EtchingStats(models.Model):
+class EtchingStat(TimestampedModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="etching_stats"
     )
@@ -14,10 +15,11 @@ class EtchingStats(models.Model):
     terminal = models.IntegerField()
 
     class Meta:
-        db_table = "etching_stats"
+        db_table = "character_etching_stat"
         constraints = [
             models.UniqueConstraint(
-                fields=["character", "level"], name="unique_etching_stats_level"
+                fields=["character", "level"],
+                name="unique_character_etching_stat",
             )
         ]
 

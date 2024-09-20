@@ -1,8 +1,9 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class Seed(models.Model):
+class Seed(TimestampedModel):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     init_compatibility = models.CharField(max_length=250, default="")
@@ -12,6 +13,7 @@ class Seed(models.Model):
     comment = models.TextField(default="")
 
     class Meta:
+        db_table = "character_seed"
         constraints = [
             models.UniqueConstraint(
                 fields=["character", "name"], name="unique_character_seed"
@@ -22,7 +24,7 @@ class Seed(models.Model):
         return f"{self.character.name}/异核/{self.name}"
 
 
-class SeedStableCompatibility(models.Model):
+class SeedStableCompatibility(TimestampedModel):
     seed = models.ForeignKey(
         Seed, on_delete=models.CASCADE, related_name="stable_compatibilities"
     )
@@ -30,7 +32,7 @@ class SeedStableCompatibility(models.Model):
     detail = models.TextField(default="")
 
     class Meta:
-        db_table = "seed_stable_compatibility"
+        db_table = "character_seed_stable_compatibility"
         constraints = [
             models.UniqueConstraint(
                 fields=["seed", "compatibility_number"],

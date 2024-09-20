@@ -1,8 +1,9 @@
 from django.db import models
 from constant.model_choices import SKILL_TYPE
+from apps.common.abstract_models import TimestampedModel
 
 
-class PassiveSkill(models.Model):
+class PassiveSkill(TimestampedModel):
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=50, choices=SKILL_TYPE)
     rarity = models.IntegerField()
@@ -24,7 +25,7 @@ class PassiveSkill(models.Model):
     special_mechanism = models.JSONField(default=list)
 
     class Meta:
-        db_table = "passive_skill"
+        db_table = "skill_passive"
 
     def __str__(self):
         return self.name

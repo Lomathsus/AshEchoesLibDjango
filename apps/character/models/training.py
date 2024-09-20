@@ -1,14 +1,16 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class Training(models.Model):
+class Training(TimestampedModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="trainings"
     )
     phase = models.IntegerField()
 
     class Meta:
+        db_table = "character_training"
         constraints = [
             models.UniqueConstraint(
                 fields=["character", "phase"], name="unique_character_training_phase"
@@ -19,7 +21,7 @@ class Training(models.Model):
         return f"{self.character.name}/穹顶训练 - Phase {self.phase}"
 
 
-class TrainingProgram(models.Model):
+class TrainingProgram(TimestampedModel):
     STAT_CHOICES = [
         ("health", "体质"),
         ("defence", "防御"),
@@ -39,7 +41,7 @@ class TrainingProgram(models.Model):
     sort_number = models.IntegerField()
 
     class Meta:
-        db_table = "training_program"
+        db_table = "character_training_program"
         constraints = [
             models.UniqueConstraint(
                 fields=["training", "name"], name="unique_character_training_program"

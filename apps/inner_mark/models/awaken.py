@@ -1,8 +1,9 @@
 from django.db import models
 from .inner_mark import InnerMark
+from apps.common.abstract_models import TimestampedModel
 
 
-class Awaken(models.Model):
+class Awaken(TimestampedModel):
     NAME_CHOICES = [
         ("health", "体质"),
         ("defence", "防御"),
@@ -21,6 +22,7 @@ class Awaken(models.Model):
     value = models.JSONField(default=list)
 
     class Meta:
+        db_table = "inner_mark_awaken"
         constraints = [
             models.UniqueConstraint(
                 fields=["inner_mark", "phase_number", "choice_number"],

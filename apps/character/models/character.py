@@ -1,10 +1,11 @@
 from django.db import models
 
 from apps.skill.models import PassiveSkill
+from apps.common.abstract_models import TimestampedModel
 
 
 # Create your models here.
-class Character(models.Model):
+class Character(TimestampedModel):
     name = models.CharField(max_length=50)
     en_name = models.CharField(max_length=50, default="")
     jp_name = models.CharField(max_length=50, default="")
@@ -23,16 +24,19 @@ class Character(models.Model):
         PassiveSkill, through="CharacterPassiveSkill"
     )
 
+    class Meta:
+        db_table = "character_info"
+
     def __str__(self):
         return self.name
 
 
-class CharacterPassiveSkill(models.Model):
+class CharacterPassiveSkill(TimestampedModel):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     passive_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = "character_passive_skill"
+        db_table = "character_passive_skill_relationship"
         constraints = [
             models.UniqueConstraint(
                 fields=["character", "passive_skill"],

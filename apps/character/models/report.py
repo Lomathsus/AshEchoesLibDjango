@@ -1,8 +1,9 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class Report(models.Model):
+class Report(TimestampedModel):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
     gender = models.CharField(max_length=50)
     height = models.IntegerField(default=-1)
@@ -17,6 +18,7 @@ class Report(models.Model):
     bref_report = models.TextField(default="")
 
     class Meta:
+        db_table = "character_report"
         constraints = [
             models.UniqueConstraint(
                 fields=["character"], name="unique_character_report"

@@ -1,8 +1,9 @@
 from django.db import models
 from .inner_mark import InnerMark
+from apps.common.abstract_models import TimestampedModel
 
 
-class CrossingStat(models.Model):
+class CrossingStat(TimestampedModel):
     inner_mark = models.ForeignKey(
         InnerMark, on_delete=models.CASCADE, related_name="crossing_stats"
     )
@@ -10,13 +11,13 @@ class CrossingStat(models.Model):
     unlock_level = models.IntegerField(default=-1)
 
     class Meta:
-        db_table = "crossing_stat"
+        db_table = "inner_mark_crossing_stat"
 
     def __str__(self):
         return self.name
 
 
-class CrossingStatLevel(models.Model):
+class CrossingStatLevel(TimestampedModel):
     crossing_stat = models.ForeignKey(
         CrossingStat, on_delete=models.CASCADE, related_name="levels"
     )
@@ -24,7 +25,7 @@ class CrossingStatLevel(models.Model):
     value = models.FloatField()
 
     class Meta:
-        db_table = "crossing_stat_level"
+        db_table = "inner_mark_crossing_stat_level"
         constraints = [
             models.UniqueConstraint(
                 fields=["crossing_stat", "level"], name="unique_crossing_stat_level"

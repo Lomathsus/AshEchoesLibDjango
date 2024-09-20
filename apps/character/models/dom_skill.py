@@ -1,8 +1,9 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class DomSkill(models.Model):
+class DomSkill(TimestampedModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="dom_skills"
     )
@@ -10,7 +11,7 @@ class DomSkill(models.Model):
     description = models.TextField(default="")
 
     class Meta:
-        db_table = "dom_skill"
+        db_table = "character_dom_skill"
         constraints = [
             models.UniqueConstraint(
                 fields=["character", "name"], name="unique_character_dom_skill"

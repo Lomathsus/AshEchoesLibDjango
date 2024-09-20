@@ -1,8 +1,9 @@
 from django.db import models
+from apps.common.abstract_models import TimestampedModel
 
 
 # Create your models here.
-class ActiveSkill(models.Model):
+class ActiveSkill(TimestampedModel):
     character = models.ForeignKey(
         "character.Character", on_delete=models.CASCADE, related_name="active_skills"
     )
@@ -16,7 +17,7 @@ class ActiveSkill(models.Model):
     is_seed = models.BooleanField(default=False)
 
     class Meta:
-        db_table = "active_skill"
+        db_table = "skill_active"
         constraints = [
             models.UniqueConstraint(
                 fields=["character", "name"],
@@ -25,7 +26,7 @@ class ActiveSkill(models.Model):
         ]
 
 
-class ActiveSkillLevel(models.Model):
+class ActiveSkillLevel(TimestampedModel):
     skill = models.ForeignKey(
         ActiveSkill, on_delete=models.CASCADE, related_name="levels"
     )  # 关联技能
@@ -33,7 +34,7 @@ class ActiveSkillLevel(models.Model):
     values = models.JSONField(default=dict)  # 使用 JSONField 存储不确定的值
 
     class Meta:
-        db_table = "active_skill_level"
+        db_table = "skill_active_level"
         constraints = [
             models.UniqueConstraint(
                 fields=["skill", "level"],

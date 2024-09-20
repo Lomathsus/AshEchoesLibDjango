@@ -1,11 +1,11 @@
 from django.db import models
-
 from constant.model_choices import RARITY_CHOICES, STAT_CHOICES
 from apps.skill.models import PassiveSkill
+from apps.common.abstract_models import TimestampedModel
 
 
 # Create your models here.
-class InnerMark(models.Model):
+class InnerMark(TimestampedModel):
     name = models.CharField(max_length=50, unique=True)
     rarity = models.IntegerField(choices=RARITY_CHOICES)
     stat_type = models.CharField(max_length=50, choices=STAT_CHOICES)
@@ -21,18 +21,18 @@ class InnerMark(models.Model):
     )
 
     class Meta:
-        db_table = "inner_mark"
+        db_table = "inner_mark_info"
 
     def __str__(self):
         return self.name
 
 
-class InnerMarkPassiveSkill(models.Model):
+class InnerMarkPassiveSkill(TimestampedModel):
     inner_mark = models.ForeignKey(InnerMark, on_delete=models.CASCADE)
     passive_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = "inner_mark_passive_skill"
+        db_table = "inner_mark_passive_skill_relationship"
         constraints = [
             models.UniqueConstraint(
                 fields=["inner_mark", "passive_skill"],

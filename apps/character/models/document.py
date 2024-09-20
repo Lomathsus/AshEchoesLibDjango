@@ -1,8 +1,9 @@
 from django.db import models
 from .character import Character
+from apps.common.abstract_models import TimestampedModel
 
 
-class Document(models.Model):
+class Document(TimestampedModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="documents"
     )
@@ -10,6 +11,7 @@ class Document(models.Model):
     content = models.TextField(default="")
 
     class Meta:
+        db_table = "character_document"
         constraints = [
             models.UniqueConstraint(
                 fields=["character", "name"], name="unique_character_document"
