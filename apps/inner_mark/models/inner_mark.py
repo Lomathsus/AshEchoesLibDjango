@@ -6,7 +6,7 @@ from apps.skill.models import PassiveSkill
 
 # Create your models here.
 class InnerMark(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     rarity = models.IntegerField(choices=RARITY_CHOICES)
     stat_type = models.CharField(max_length=50, choices=STAT_CHOICES)
     illustrator = models.CharField(max_length=50, default="")
@@ -15,34 +15,30 @@ class InnerMark(models.Model):
     description = models.TextField(default="")
     illustration_1 = models.TextField(default="")
     illustration_2 = models.TextField(default="")
-    core_skill = models.ForeignKey(
-        PassiveSkill, on_delete=models.CASCADE, related_name="inner_marks"
-    )
-    regular_skills = models.ManyToManyField(
+    passive_skills = models.ManyToManyField(
         PassiveSkill,
-        through="InnerMarkRegularSkill",
+        through="InnerMarkPassiveSkill",
     )
 
-    def save(self, *args, **kwargs):
-        # Ensure that core_skill is of type 'core' or 'motivation'
-        if self.core_skill.type not in ["core", "motivation"]:
-            raise ValueError('Error: 核心技能类型必须是"core"或者"motivation"')
-
-        super().save(*args, **kwargs)
+    class Meta:
+        db_table = "inner_mark"
 
     def __str__(self):
         return self.name
 
 
-class InnerMarkRegularSkill(models.Model):
+class InnerMarkPassiveSkill(models.Model):
     inner_mark = models.ForeignKey(InnerMark, on_delete=models.CASCADE)
-    regular_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
+    passive_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
 
-    def save(self, *args, **kwargs):
-        if self.regular_skill.type == "regular":
-            super().save(*args, **kwargs)
-        else:
-            raise ValueError('Error: 核心技能类型必须是"regular"')
+    class Meta:
+        db_table = "inner_mark_passive_skill"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["inner_mark", "passive_skill"],
+                name="unique_inner_mark_passive_skill",
+            )
+        ]
 
     def __str__(self):
-        return f"{self.inner_mark.name}-{self.regular_skill.name}"
+        return f"{self.inner_mark.name}/{self.passive_skill.get_type_display()}/{self.passive_skill.name}"

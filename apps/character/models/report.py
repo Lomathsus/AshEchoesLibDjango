@@ -3,6 +3,7 @@ from .character import Character
 
 
 class Report(models.Model):
+    character = models.OneToOneField(Character, on_delete=models.CASCADE)
     gender = models.CharField(max_length=50)
     height = models.IntegerField(default=-1)
     birthday = models.CharField(max_length=50, default="")
@@ -15,7 +16,12 @@ class Report(models.Model):
     address = models.TextField(default="")
     bref_report = models.TextField(default="")
 
-    character = models.OneToOneField(Character, on_delete=models.CASCADE)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["character"], name="unique_character_report"
+            )
+        ]
 
     def __str__(self):
         return f"{self.character.name}/个人报告"

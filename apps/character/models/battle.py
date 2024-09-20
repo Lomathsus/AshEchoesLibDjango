@@ -3,6 +3,7 @@ from .character import Character
 
 
 class Battle(models.Model):
+    character = models.OneToOneField(Character, on_delete=models.CASCADE)
     attack_name = models.CharField(max_length=50)
     attack_tag = models.JSONField(default=list)
     attack_range = models.CharField(max_length=50)
@@ -17,8 +18,6 @@ class Battle(models.Model):
     mastery_on_damage = models.IntegerField()
     mastery_on_block = models.IntegerField()
     character_enhancement = models.TextField(default="")
-
-    character = models.OneToOneField(Character, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.character.name}/战斗属性"

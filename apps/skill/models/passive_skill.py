@@ -23,5 +23,8 @@ class PassiveSkill(models.Model):
     stat_increase = models.JSONField(default=list)
     special_mechanism = models.JSONField(default=list)
 
+    class Meta:
+        db_table = "passive_skill"
+
     def __str__(self):
         return self.name

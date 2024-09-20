@@ -19,7 +19,6 @@ class Character(models.Model):
     acquisition = models.JSONField(default=list)
     music_name = models.CharField(max_length=50, default="")
     expression = models.JSONField(default=list)
-
     passive_skills = models.ManyToManyField(
         PassiveSkill, through="CharacterPassiveSkill"
     )
@@ -31,6 +30,15 @@ class Character(models.Model):
 class CharacterPassiveSkill(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     passive_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "character_passive_skill"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["character", "passive_skill"],
+                name="unique_character_passive_skill",
+            )
+        ]
 
     def __str__(self):
         return f"{self.character.name}/{self.passive_skill.name}"

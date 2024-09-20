@@ -3,11 +3,17 @@ from .character import Character
 
 
 class Training(models.Model):
-    phase = models.IntegerField()
-
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="trainings"
     )
+    phase = models.IntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["character", "phase"], name="unique_character_training_phase"
+            )
+        ]
 
     def __str__(self):
         return f"{self.character.name}/穹顶训练 - Phase {self.phase}"
@@ -25,14 +31,20 @@ class TrainingProgram(models.Model):
         ("block", "格挡强度"),
         ("damage_reduction", "减伤"),
     ]
-
+    training = models.ForeignKey(
+        Training, on_delete=models.CASCADE, related_name="training_programs"
+    )
     name = models.CharField(max_length=20, choices=STAT_CHOICES, default="")
     value = models.IntegerField()  # 可根据具体需求选择合适的数据类型
     sort_number = models.IntegerField()
 
-    training = models.ForeignKey(
-        Training, on_delete=models.CASCADE, related_name="training_programs"
-    )
+    class Meta:
+        db_table = "training_program"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["training", "name"], name="unique_character_training_program"
+            )
+        ]
 
     def __str__(self):
         return f"{self.training.character.name}/{self.get_name_display()}"
