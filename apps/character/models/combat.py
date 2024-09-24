@@ -14,8 +14,8 @@ class Combat(BaseModel):
     basic_damage_reduction = models.IntegerField()
     reposition_distance = models.IntegerField()
     reposition_cooldown = models.IntegerField()
-    mastery_on_heal = models.IntegerField()
-    mastery_on_damage = models.IntegerField()
+    mastery_on_healing = models.IntegerField()
+    mastery_on_damage_bonus = models.IntegerField()
     mastery_on_block = models.IntegerField()
     character_enhancement = models.TextField(default="")
 
@@ -24,3 +24,12 @@ class Combat(BaseModel):
 
     def __str__(self):
         return f"{self.character.name}/战斗属性"
+
+    def save(self, *args, **kwargs):
+        for field in self._meta.fields:
+            if isinstance(field, models.IntegerField):
+                try:
+                    field_value = int(getattr(self, field.name))
+                    setattr(self, field.name, field_value)
+                except (TypeError, ValueError):
+                    setattr(self, field.name, 0)

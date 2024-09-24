@@ -10,7 +10,7 @@ class MemoryTrace(BaseModel):
     rarity = models.IntegerField(choices=RARITY_CHOICES)
     type = models.CharField(max_length=50, choices=STAT_CHOICES)
     artist = models.CharField(max_length=50, default="")
-    implemented_at = models.DateField(null=True)
+    implemented_at = models.IntegerField(null=True, blank=True)
     acquisitions = models.JSONField(default=list)
     description = models.TextField(default="")
     illustration_1 = models.TextField(default="")
