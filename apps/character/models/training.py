@@ -1,9 +1,11 @@
 from django.db import models
+
+from constant.model_choices import TRAINING_CHOICES
 from .character import Character
-from apps.common.abstract_models import TimestampedModel
+from common.abstract_class import BaseModel
 
 
-class Training(TimestampedModel):
+class Training(BaseModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="trainings"
     )
@@ -21,24 +23,13 @@ class Training(TimestampedModel):
         return f"{self.character.name}/穹顶训练 - Phase {self.phase}"
 
 
-class TrainingProgram(TimestampedModel):
-    STAT_CHOICES = [
-        ("health", "体质"),
-        ("defence", "防御"),
-        ("attack", "攻击"),
-        ("mastery", "专精"),
-        ("terminal", "终端"),
-        ("attack_speed", "攻击速度"),
-        ("heal", "治愈力"),
-        ("block", "格挡强度"),
-        ("damage_reduction", "减伤"),
-    ]
+class TrainingProgram(BaseModel):
     training = models.ForeignKey(
         Training, on_delete=models.CASCADE, related_name="training_programs"
     )
-    name = models.CharField(max_length=20, choices=STAT_CHOICES, default="")
-    value = models.IntegerField()  # 可根据具体需求选择合适的数据类型
-    sort_number = models.IntegerField()
+    sort_number = models.IntegerField(unique=True)
+    name = models.CharField(max_length=50, choices=TRAINING_CHOICES, default="")
+    value = models.IntegerField()
 
     class Meta:
         db_table = "character_training_program"

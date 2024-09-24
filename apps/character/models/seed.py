@@ -1,9 +1,9 @@
 from django.db import models
 from .character import Character
-from apps.common.abstract_models import TimestampedModel
+from common.abstract_class import BaseModel
 
 
-class Seed(TimestampedModel):
+class Seed(BaseModel):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     init_compatibility = models.CharField(max_length=250, default="")
@@ -24,7 +24,7 @@ class Seed(TimestampedModel):
         return f"{self.character.name}/异核/{self.name}"
 
 
-class SeedStableCompatibility(TimestampedModel):
+class SeedStableCompatibility(BaseModel):
     seed = models.ForeignKey(
         Seed, on_delete=models.CASCADE, related_name="stable_compatibilities"
     )

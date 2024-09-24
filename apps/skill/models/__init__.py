@@ -1,2 +1,2 @@
-from .active_skill import ActiveSkill, ActiveSkillLevel
-from .passive_skill import PassiveSkill
+from .combat_skill import CombatSkill, CombatSkillLevel
+from .engraving_skill import EngravingSkill

@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.character",
-    "apps.inner_mark",
-    "apps.skill",
-    "rest_framework",
     "corsheaders",
+    "rest_framework",
+    "json_loader",
+    "apps.character",
+    "apps.memory_trace",
+    "apps.skill",
 ]
 
 MIDDLEWARE = [

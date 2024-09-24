@@ -1,9 +1,9 @@
 from django.db import models
 from .character import Character
-from apps.common.abstract_models import TimestampedModel
+from common.abstract_class import BaseModel
 
 
-class Document(TimestampedModel):
+class Document(BaseModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="documents"
     )

@@ -1,27 +1,28 @@
 from django.db import models
 
-from apps.skill.models import PassiveSkill
-from apps.common.abstract_models import TimestampedModel
+from apps.skill.models import EngravingSkill
+from common.abstract_class import BaseModel
+from constant.model_choices import RARITY_CHOICES
 
 
 # Create your models here.
-class Character(TimestampedModel):
-    name = models.CharField(max_length=50)
+class Character(BaseModel):
+    name = models.CharField(max_length=50, unique=True)
     en_name = models.CharField(max_length=50, default="")
     jp_name = models.CharField(max_length=50, default="")
     cn_cv = models.CharField(max_length=50, default="")
     jp_cv = models.CharField(max_length=50, default="")
     profession = models.CharField(max_length=50)
     element = models.CharField(max_length=50)
-    rarity = models.IntegerField()
-    tag = models.JSONField(default=list)
+    rarity = models.IntegerField(choices=RARITY_CHOICES)
+    tags = models.JSONField(default=list)
     prototype = models.CharField(max_length=50)
     implemented_at = models.DateField()
-    acquisition = models.JSONField(default=list)
+    acquisitions = models.JSONField(default=list)
     music_name = models.CharField(max_length=50, default="")
-    expression = models.JSONField(default=list)
-    passive_skills = models.ManyToManyField(
-        PassiveSkill, through="CharacterPassiveSkill"
+    expressions = models.JSONField(default=list)
+    engraving_skills = models.ManyToManyField(
+        EngravingSkill, through="CharacterEngravingSkill"
     )
 
     class Meta:
@@ -31,18 +32,18 @@ class Character(TimestampedModel):
         return self.name
 
 
-class CharacterPassiveSkill(TimestampedModel):
+class CharacterEngravingSkill(BaseModel):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    passive_skill = models.ForeignKey(PassiveSkill, on_delete=models.CASCADE)
+    engraving_skill = models.ForeignKey(EngravingSkill, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = "character_passive_skill_relationship"
+        db_table = "character_engraving_skill_relationship"
         constraints = [
             models.UniqueConstraint(
-                fields=["character", "passive_skill"],
-                name="unique_character_passive_skill",
+                fields=["character", "engraving_skill"],
+                name="unique_character_engraving_skill",
             )
         ]
 
     def __str__(self):
-        return f"{self.character.name}/{self.passive_skill.name}"
+        return f"{self.character.name}/刻印技能/{self.engraving_skill.name}"

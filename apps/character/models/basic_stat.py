@@ -1,14 +1,14 @@
 from django.db import models
 from .character import Character
-from apps.common.abstract_models import TimestampedModel
+from common.abstract_class import BaseModel
 
 
-class Stat(TimestampedModel):
+class BasicStat(BaseModel):
     character = models.ForeignKey(
-        Character, on_delete=models.CASCADE, related_name="stats"
+        Character, on_delete=models.CASCADE, related_name="basic_stats"
     )
     level = models.IntegerField()
-    health = models.IntegerField()
+    vitality = models.IntegerField()
     attack = models.IntegerField()
     mastery = models.IntegerField()
 
@@ -16,7 +16,7 @@ class Stat(TimestampedModel):
         db_table = "character_stat"
         constraints = [
             models.UniqueConstraint(
-                fields=["character", "level"], name="unique_character_stat"
+                fields=["character", "level"], name="unique_character_basic_stat"
             )
         ]
 

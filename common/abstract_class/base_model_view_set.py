@@ -1,18 +1,5 @@
-# common/abstract_models.py
-from crypt import methods
-
-from django.db import models
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
-
-
-class TimestampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
 
 
 class BaseModelViewSet(viewsets.ModelViewSet):
