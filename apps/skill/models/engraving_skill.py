@@ -5,7 +5,7 @@ from common.abstract_class import BaseModel
 
 class EngravingSkill(BaseModel):
     name = models.CharField(max_length=50)
-    type = models.CharField(max_length=50, choices=SKILL_TYPE)
+    type = models.CharField(max_length=50, choices=SKILL_TYPE, null=True)
     rarity = models.IntegerField(choices=RARITY_CHOICES)
     professions = models.JSONField(default=list)
     profession_types = models.JSONField(default=list)
@@ -21,9 +21,8 @@ class EngravingSkill(BaseModel):
     damage_increases = models.JSONField(default=list)
     damage_reduction = models.IntegerField()
     target_debuffs = models.JSONField(default=list)
-    stat_increases = models.JSONField(default=list)
+    stats_increases = models.JSONField(default=list)
     special_mechanism = models.JSONField(default=list)
-    is_motivation = models.BooleanField(default=False)
 
     class Meta:
         db_table = "engraving_skill"

@@ -55,4 +55,4 @@ TRAINING_CHOICES = STAT_CHOICES + [
     ("basic_damage_reduction", "减伤"),
 ]
 
-SKILL_TYPE = [("awaking", "唤醒"), ("nexus", "漫巡")]
+SKILL_TYPE = [("inspire", "激励"), ("core", "核心"), ("regular", "常规")]
