@@ -1,4 +1,6 @@
 from django.db import models
+
+from utils.extract_number import extract_number
 from .character import Character
 from common.abstract_class import BaseModel
 
@@ -8,7 +10,7 @@ class Combat(BaseModel):
     attack_tags = models.JSONField(default=list)
     attack_range = models.CharField(max_length=50)
     attack_range_value = models.IntegerField()
-    attack_speed = models.IntegerField()
+    attack_speed = models.FloatField()
     attack_description = models.TextField()
     critical_rate = models.IntegerField()
     basic_damage_reduction = models.IntegerField()
@@ -24,12 +26,3 @@ class Combat(BaseModel):
 
     def __str__(self):
         return f"{self.character.name}/战斗属性"
-
-    def save(self, *args, **kwargs):
-        for field in self._meta.fields:
-            if isinstance(field, models.IntegerField):
-                try:
-                    field_value = int(getattr(self, field.name))
-                    setattr(self, field.name, field_value)
-                except (TypeError, ValueError):
-                    setattr(self, field.name, 0)

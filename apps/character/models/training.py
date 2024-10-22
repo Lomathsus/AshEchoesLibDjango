@@ -27,7 +27,7 @@ class TrainingProgram(BaseModel):
     training = models.ForeignKey(
         Training, on_delete=models.CASCADE, related_name="training_programs"
     )
-    sort_number = models.IntegerField(unique=True)
+    sort_number = models.IntegerField()
     name = models.CharField(max_length=50, choices=TRAINING_CHOICES, default="")
     value = models.IntegerField()
 
@@ -35,7 +35,8 @@ class TrainingProgram(BaseModel):
         db_table = "character_training_program"
         constraints = [
             models.UniqueConstraint(
-                fields=["training", "name"], name="unique_character_training_program"
+                fields=["training", "sort_number"],
+                name="unique_character_training_program",
             )
         ]
 

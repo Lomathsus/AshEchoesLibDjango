@@ -6,6 +6,7 @@ from .dom_skill import DomSkill
 from .equipment import Equipment
 from .engraving_stat import EngravingStat
 from .report import Report
-from .seed import Seed
+from .seed import Seed, SeedStableCompatibility
 from .basic_stat import BasicStat
 from .training import Training, TrainingProgram
+from .trait import Trait, TraitLevel

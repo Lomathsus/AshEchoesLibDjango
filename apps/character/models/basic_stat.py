@@ -1,4 +1,6 @@
 from django.db import models
+
+from utils.extract_number import extract_number
 from .character import Character
 from common.abstract_class import BaseModel
 

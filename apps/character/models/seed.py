@@ -7,7 +7,6 @@ class Seed(BaseModel):
     character = models.OneToOneField(Character, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     init_compatibility = models.CharField(max_length=250, default="")
-    bref_report = models.TextField(default="")
     cell_synchronisation_rate = models.CharField(max_length=250, default="")
     inspection_agency = models.CharField(max_length=50, default="")
     comment = models.TextField(default="")

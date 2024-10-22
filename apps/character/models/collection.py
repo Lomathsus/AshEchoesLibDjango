@@ -7,7 +7,7 @@ class Collection(BaseModel):
     character = models.ForeignKey(
         Character, on_delete=models.CASCADE, related_name="collections"
     )
-    sort_number = models.IntegerField(unique=True)
+    sort_number = models.IntegerField()
     description = models.TextField(default="")
 
     class Meta:

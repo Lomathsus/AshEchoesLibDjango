@@ -15,7 +15,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DB_PATH = Path.home() / "Documents/Work/Develop/Personal/Android/AshEchoesLib/assets"
+DB_PATH = (
+    Path.home()
+    / "Documents/Work/Develop/Personal/platform/Desktop/Electron/AshEchoesGachaCalculator/assets/db"
+)
 
 
 # Quick-start development settings - unsuitable for production
@@ -119,10 +122,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Asia/Shanghai"
+USE_TZ = True
 
 USE_I18N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

@@ -15,7 +15,7 @@ class Report(BaseModel):
     teleported_from = models.CharField(max_length=100, default="")
     birthplace = models.CharField(max_length=100, default="")
     address = models.TextField(default="")
-    bref_report = models.TextField(default="")
+    brief_report = models.TextField(default="")
 
     class Meta:
         db_table = "character_report"

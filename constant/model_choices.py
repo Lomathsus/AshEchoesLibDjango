@@ -27,7 +27,7 @@ STAT_CHOICES = [
 ELEMENT_CHOICES = [
     ("fire", "炎"),
     ("water", "水"),
-    ("lighting", "雷"),
+    ("lightning", "雷"),
     ("ice", "霜"),
     ("wind", "风"),
     ("corrosion", "蚀"),

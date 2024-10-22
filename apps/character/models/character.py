@@ -17,9 +17,8 @@ class Character(BaseModel):
     rarity = models.IntegerField(choices=RARITY_CHOICES)
     tags = models.JSONField(default=list)
     prototype = models.CharField(max_length=50)
-    implemented_at = models.IntegerField(null=True, blank=True)
+    implemented_at = models.DateField(null=True, blank=True)
     acquisitions = models.JSONField(default=list)
-    music_name = models.CharField(max_length=50, default="")
     expressions = models.JSONField(default=list)
     engraving_skills = models.ManyToManyField(
         EngravingSkill, through="CharacterEngravingSkill"
@@ -30,18 +29,6 @@ class Character(BaseModel):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        try:
-            super().save(*args, **kwargs)
-
-        except IntegrityError as e:
-            if "unique_field" in str(e):
-                # 当unique字段冲突时，查询并返回已存在的那条数据
-                existing_object = Character.objects.get(unique_field=self.name)
-                return existing_object
-            else:
-                return None
 
 
 class CharacterEngravingSkill(BaseModel):
